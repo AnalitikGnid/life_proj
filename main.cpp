@@ -9,7 +9,7 @@
 #include <string>
 
 
-#include </home/nikita/inf_proj/cell_1.cpp>
+#include </home/nikita/life_proj/cell_1.cpp>
 
 
 std::vector< std::pair<int, int> > Read(std::string filename){ //функция чтения из файла
@@ -89,7 +89,35 @@ int main()
                 		}
             		}
 
-	    		else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){ //сохранение на S
+			else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){ //двигаем стрелками
+                                f.Dvizenie(0, 1);
+				sf::sleep(sf::milliseconds(10));
+				window.clear(sf::Color::White);
+				f.Print(window);
+                        }
+
+			else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){ //двигаем стрелками
+                                f.Dvizenie(0, f.n - 1);
+                                sf::sleep(sf::milliseconds(10));
+                                window.clear(sf::Color::White);
+                                f.Print(window);
+                        }
+
+			else if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){ //двигаем стрелками
+                                f.Dvizenie(1, 0);
+                                sf::sleep(sf::milliseconds(10));
+                                window.clear(sf::Color::White);
+                                f.Print(window);
+                        }
+			
+			else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){ //двигаем стрелками
+                                f.Dvizenie(f.m - 1, 0);
+                                sf::sleep(sf::milliseconds(10));
+                                window.clear(sf::Color::White);
+                                f.Print(window);
+                        }
+
+	    		else if(sf::Keyboard::isKeyPressed(sf::Keyboard::C)){ //сохранение на C
                 		std::ofstream out(filename_out); // окрываем файл для чтения
        				sf::sleep(sf::milliseconds(100));
  				if (out.is_open()){
