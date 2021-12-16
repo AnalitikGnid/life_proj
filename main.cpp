@@ -97,6 +97,24 @@ int main()
 
                 }
             }
+	    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+                std::ofstream out("database/out/1.txt"); // окрываем файл для чтения
+       		sf::sleep(sf::milliseconds(100));
+ 
+        	if (out.is_open()){
+                	for (int i = 0; i < window_length / cell_size; i ++){
+				for (int j = 0; j < window_height / cell_size; j ++){
+					if (f.grind[i][j].is_alive) out << 'O';
+					else out << '.';
+				}
+				out << std::endl;
+			}
+
+        	}
+        	out.close(); // закрываем файл
+
+            }
+
 
 
         }
