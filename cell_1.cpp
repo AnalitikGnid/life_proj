@@ -15,9 +15,9 @@ class Cell {
         if(t) rectangle.setFillColor(sf::Color::Black);
         else  rectangle.setFillColor(sf::Color::White);
 
-        window.draw(rectangle);
-        window.display();
-        }
+       	window.draw(rectangle);
+	window.display();
+	}
 
 
 };
@@ -61,16 +61,21 @@ struct Field {
                 window.display();
         }
 	void Recount(){
-                for (int i = 1; i < n - 1; i++){
-            		for (int j = 1; j < m - 1; j++){
-                		grind[i][j].alive_nb  = grind[i-1][j-1].is_alive + grind[i-1][j].is_alive + grind[i-1][j+1].is_alive
-                                      		      + grind[i][j-1].is_alive + grind[i][j+1].is_alive
-                                     		      + grind[i+1][j-1].is_alive + grind[i+1][j].is_alive + grind[i+1][j+1].is_alive;
+                for (int i = 0; i < n; i++){
+            		for (int j = 0; j < m; j++){
+                		grind[i][j].alive_nb    = grind[(i - 1 + n) % n][(j - 1 + m) % m].is_alive
+				                	+ grind[(i - 1 + n) % n][j].is_alive
+						       	+ grind[(i - 1 + n) % n][(j + 1 + m) % m].is_alive
+                                      		        + grind[i][(j - 1 + m) % m].is_alive
+						       	+ grind[i][(j + 1 + m) % m].is_alive
+                                     		        + grind[(i + 1 + n) % n][(j - 1 + m) % m].is_alive
+						       	+ grind[(i + 1 + n) % n][j].is_alive
+						       	+ grind[(i + 1 + n) % n][(j + 1 + m) % m].is_alive;
                 //if(grind[i][j].alive_nb >= 2) std::cout << "YEs: " << i << " " << j << std::endl;
             }
         }
-                for (int i = 1; i < n - 1; i++){
-            for (int j = 1; j < m - 1; j++){
+                for (int i = 0; i < n; i++){
+            for (int j = 0; j < m; j++){
                 if (grind[i][j].is_alive){
                     if (grind[i][j].alive_nb < 2 || grind[i][j].alive_nb > 3)
                         grind[i][j].is_alive = false;
