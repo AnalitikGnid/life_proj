@@ -1,6 +1,29 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include<iostream>
+#include<queue>
+
+template<typename T>
+void Sdvig(T& mas, int delta){
+    int n = mas.size();
+
+    delta %= n;
+    if(delta == 0) return;
+
+    std::queue<typename T::value_type> first_part;
+    for(int i = 0; i < delta; i++){
+        first_part.push(move(mas[i]));
+    }
+
+    for(int i = 0; i <  n - delta; i++){
+        mas[i] = move(mas[i + delta]);
+    }
+
+    for(int i = n - delta; i < n; i++){
+        mas[i] = first_part.front();
+        first_part.pop();
+    }
+}
 
 class Cell {
     public:
@@ -42,8 +65,12 @@ struct Field {
 		}
 	}
 
-
-
+	void Dvizenie(int delta_x, int delta_y){
+        	Sdvig(grind, delta_y);
+        
+       		for(int i = 0; i < n; i++)
+            		Sdvig(grind[i], delta_x);
+   	}
 
         void Print(sf::RenderWindow &window) const{
         for (int i = 0; i < n; i++){
