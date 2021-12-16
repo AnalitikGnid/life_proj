@@ -38,6 +38,7 @@ int main()
 	int window_length = 1500;
 	int window_height = 1500;
 	int cell_size = 10;
+	int time = 100;
 	sf::RenderWindow window(sf::VideoMode(window_length, window_height), "That's how Life works");
 
 	Field f(window_length / cell_size, window_height / cell_size, cell_size); //создаем поле
@@ -57,12 +58,23 @@ int main()
                			window.close();
         	}
 
+		
+		bool manipulation = 0;
+		bool ctrl = 0;
+        	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){ 
+			manipulation = 1;
+		}
 
-        	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){ //пауза на пробеле
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)){ 
+                        manipulation = 1;
+			ctrl = 1;
+                }
+
+		if(manipulation){
                 	sf::sleep(sf::milliseconds(10));
             		if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
                 		f.Print(window);
-				sf::sleep(sf::milliseconds(100));
+				sf::sleep(sf::milliseconds(10));
 			}
 		
 
@@ -89,11 +101,20 @@ int main()
                 		}
             		}
 
+			else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){ //увеличиваем скорость
+                                time -= 10;
+                        }
+
+			else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){ //уменьшаем скорость
+                                time += 10;
+                        }
+
+			
 			else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){ //двигаем стрелками
                                 f.Dvizenie(0, 1);
-				sf::sleep(sf::milliseconds(10));
-				window.clear(sf::Color::White);
-				f.Print(window);
+                                sf::sleep(sf::milliseconds(10));
+                                window.clear(sf::Color::White);
+                                f.Print(window);
                         }
 
 			else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){ //двигаем стрелками
@@ -131,13 +152,19 @@ int main()
 				}
         			out.close(); // закрываем файл
 			}
+			if (ctrl){
+				window.clear(sf::Color::White);
+	                        sf::sleep(sf::milliseconds(time));
+        	                f.Recount();
+                	        f.Print(window);
+			}
 		}
-        else{
-        	window.clear(sf::Color::White);
-            	sf::sleep(sf::milliseconds(100));
-            	f.Recount();
-            	f.Print(window);
-	}
+        	else{
+        		window.clear(sf::Color::White);
+            		sf::sleep(sf::milliseconds(time));
+            		f.Recount();
+            		f.Print(window);
+		}
     }
 
     return 0;
